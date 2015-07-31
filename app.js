@@ -3,7 +3,7 @@
   var storeJSON = function(e) {
     data = JSON.parse(e.target.responseText);
     localStorage.data = e.target.responseText;
-    parseURL();
+    return 'success';
   };
 
   var loadJSON = function(url, callback) {
@@ -11,7 +11,7 @@
     request.open('GET', url);
     request.onload = callback;
     request.send();
-    return;
+    return 'success';
   };
 
   var buildPaletteDiv = function(palette) {
@@ -23,12 +23,14 @@
     button.className = "palette__button";
     button.setAttribute("data-js", "paletteButton");
     button.addEventListener("click", function(event) {
-      if (event.target.parentElement.className.includes('active')) {
+      var parentClass = event.target.parentElement.className;
+      if (parentClass.includes('active')) {
+        event.target.parentElement.className = parentClass.split(' ').filter( function(el) { return el !== 'active' } );
         var path = "/";
-        history.pushState(null, null, path);
-        parseURL();
+        router.setRoute(path);
       } else {
-        generateURL(event);
+        var path = "/palette/" + event.target.parentNode.id;
+        router.setRoute(path)
       };
     });
 
@@ -60,7 +62,7 @@
     div.appendChild(title);
     div.appendChild(colors);
 
-    return div
+    return div;
   };
 
   var buildDetailsDiv = function(palette) {
@@ -125,74 +127,63 @@
     return div;
   };
 
-  var displayIndex = function(data) {
-    var mainDiv = document.querySelector('[data-js="body"]');
+  var displayIndex = function() {
+    console.log('Displaying index')
+    var data = JSON.parse(localStorage.data);
+    clearAppMain();
+    var appMain = document.querySelector('[data-js="appMain"]');
     data.forEach(function(palette) {
       var paletteDiv = buildPaletteDiv(palette);
-      mainDiv.appendChild(paletteDiv);
+      appMain.appendChild(paletteDiv);
     });
-    return;
+    return 'success';
   };
 
   var displayDetails = function(id) {
-    clearPalettes();
+    console.log('Displaying details for: ' + id);
+    clearAppMain();
+    var data = JSON.parse(localStorage.data);
     var palette = data.filter(function(el) { return el.id == id });
     palette = palette[0];
     var paletteDiv = buildPaletteDiv(palette);
     paletteDiv.className += " active"
     var detailsDiv = buildDetailsDiv(palette);
-    var mainDiv = document.querySelector('[data-js="body"]');
-    mainDiv.appendChild(paletteDiv);
-    mainDiv.appendChild(detailsDiv);
+    var appMain = document.querySelector('[data-js="appMain"]');
+    appMain.appendChild(paletteDiv);
+    appMain.appendChild(detailsDiv);
   };
 
-  var clearPalettes = function() {
-    var body = document.querySelector('[data-js="body"]');
-    body.innerHTML = "";
+  var clearAppMain = function() {
+    var appMain = document.querySelector('[data-js="appMain"]');
+    appMain.innerHTML = "";
   };
-
-  var generateURL = function(event) {
-    var path = "/palette/" + event.target.parentNode.id;
-    history.pushState(null, null, path);
-    parseURL();
-  };
-
-  var parseURL = function() {
-    var path = window.location.pathname;
-    var pathArr = path.split('/');
-    if (pathArr[1] === "") {
-      console.log('Parsing: ' + path)
-      clearPalettes();
-      displayIndex(data);
-    } else if (pathArr[1] === "palette") {
-      console.log('Parsing: ' + path)
-      displayDetails(pathArr[2]);
-    } else {
-      console.log('Parsing: ' + path)
-      var err = document.createElement('div');
-      err.className = "palette";
-      err.innerText = "This is not a valid URL";
-      var body = document.querySelector('[data-js="body"]');
-      body.insertBefore(err, body.childNodes[0]);
-    };
-  };
-
-  var data;
 
   if (localStorage.data === undefined) {
+    console.log('Loading & Storing JSON from server')
     loadJSON('/palettes.json', storeJSON);
-  } else {
-    data = JSON.parse(localStorage.data);
-    parseURL();
   };
 
-  window.addEventListener('popstate', parseURL);
+  var routes = {
+    '/'            : displayIndex,
+    '/palette/:id' : displayDetails
+  };
+
+  var router = Router(routes);
+  router.configure({ html5history: true });
+  router.init();
+
+  document.addEventListener('click', function(e) {
+    var href = e.target.attributes.href;
+    if (href && href.value[0] === '/') {
+      e.preventDefault();
+      router.setRoute(href.value)
+    }
+  });
 
   var homeButton = document.querySelector('[data-js="homeButton"]');
   homeButton.addEventListener('click', function() {
     var path = "/";
-    history.pushState(null, null, path);
-    parseURL();
+    router.setRoute(path);
   });
 
 })();

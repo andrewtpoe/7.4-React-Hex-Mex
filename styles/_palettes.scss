@@ -1,0 +1,55 @@
+.palette {
+  height: 100px;
+  width: 100%;
+  margin-bottom: 20px;
+  line-height: 100px;
+  font-size: 30px;
+  background-color: #eeeeee;
+  border-radius: 50px;
+  border: 1px solid #000;
+  display: inline-block;
+  position: relative;
+}
+.active > .palette__button {
+  transform: rotate(90deg);
+}
+
+.palette__button {
+  background-image: url("/images/button.png");
+  background-size: 100%, 100%;
+  background-color: rgba(0,0,0,0);
+  border: none;
+  outline: none;
+  height: 80px;
+  width: 80px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  &:active {
+    border: 2px solid #4d4d4d;
+    border-radius: 40px;
+  }
+}
+.palette__title {
+  position: absolute;
+  top: 0;
+  left: 100px;
+  line-height: 98px;
+  font-size: 30px;
+}
+.palette__colors {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100px;
+  width: 75%;
+}
+.palette__color {
+  height: 78%;
+  width: 15%;
+  margin: 10px;
+  display: inline-block;
+  border-radius: 50%;
+  vertical-align: middle;
+  float: right;
+}

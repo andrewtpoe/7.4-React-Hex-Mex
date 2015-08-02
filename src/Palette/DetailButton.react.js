@@ -3,7 +3,6 @@ var React = require('react');
 var DetailButton = React.createClass({
 
   render: function() {
-    console.log('Rendering Detail Button');
     if (this.props.details === 'active') {
       var href = "/";
     } else {

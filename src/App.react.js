@@ -8,9 +8,9 @@ var HomeButton = require('./HomeButton.react');
 var App = React.createClass({
   getInitialState: function() {
     console.log('Setting Initial State');
-    var palettes = JSON.parse(sessionStorage.data)
+    // var palettes = JSON.parse(sessionStorage.data)
     return {
-      data       : palettes,
+      data       : '',
       currentView: this._buildIndexView
     }
   },
@@ -18,6 +18,27 @@ var App = React.createClass({
   componentWillMount: function() {
     console.log('Running componentWillMount');
     this._initRouter();
+  },
+
+  componentDidMount: function() {
+    this._getData('palettes.json', this._setSessionData);
+  },
+
+  _getData: function(url, callback) {
+    console.log('Loading JSON');
+    var request = new XMLHttpRequest;
+    request.open('GET', url);
+    request.onload = callback;
+    request.send();
+  },
+
+  _setSessionData: function(e) {
+    console.log('Storing Data');
+    sessionStorage.data = e.target.responseText;
+    this.setState({
+      data       : JSON.parse(e.target.responseText),
+      currentView: this._buildIndexView
+    })
   },
 
   _initRouter: function() {
@@ -40,21 +61,26 @@ var App = React.createClass({
   },
 
   _displayIndex: function() {
-    console.log('Displaying Index');
-    this.setState({
-      data       : JSON.parse(sessionStorage.data),
-      currentView: this._buildIndexView
-    });
+    if (sessionStorage.data !== undefined) {
+      console.log('Displaying Index');
+      this.setState({
+        data       : JSON.parse(sessionStorage.data),
+        currentView: this._buildIndexView
+      });
+    };
   },
 
   _buildIndexView: function() {
-    console.log('Building Palettes Index View');
     var self = this;
-    return (
-      this.state.data.map(function(palette) {
-        return <Palette palette={palette} displayDetails={self._displayDetails} key={palette.id} />;
-      })
-    )
+    console.log(this.state.data);
+    if(typeof(this.state.data) === "object") {
+      console.log('Building Palettes Index View');
+      return (
+        this.state.data.map(function(palette) {
+          return <Palette palette={palette} displayDetails={self._displayDetails} key={palette.id} />;
+        })
+      )
+    };
   },
 
   _displayDetails: function(id) {

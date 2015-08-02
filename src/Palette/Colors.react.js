@@ -4,7 +4,6 @@ var Color = require('./Colors/Color.react.js')
 var Colors = React.createClass({
 
   render: function() {
-    console.log('Rendering Palette Colors');
     var p = this.props.palette;
     var cols = [
       p.colours.pop,

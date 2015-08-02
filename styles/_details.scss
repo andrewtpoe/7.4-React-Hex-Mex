@@ -1,5 +1,5 @@
 .details {
-  height: 200px;
+  height: 227px;
   margin: 0 50px;
   background-color: #eeeeee;
   border: 1px solid #000;
@@ -18,7 +18,7 @@
 .details__userName {
   @include detailText(50px, 50%);
 }
-.details__colorsDiv {
+.details__colors {
   position: absolute;
   top: 100px;
   height: 125px;

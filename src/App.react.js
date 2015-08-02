@@ -1,6 +1,9 @@
 var React = require('react');
 var Router = require('director').Router;
 var Palette = require('./Palette.react');
+var Details = require('./Details.react');
+var FilterBox = require('./FilterBox.react');
+var HomeButton = require('./HomeButton.react');
 
 var App = React.createClass({
   getInitialState: function() {
@@ -24,6 +27,7 @@ var App = React.createClass({
       '/'            : self._displayIndex,
       '/palette/:id' : self._displayDetails
     });
+    self.router.configure({ html5history: true });
     self.router.init();
 
     document.addEventListener('click', function(e) {
@@ -71,7 +75,7 @@ var App = React.createClass({
     return (
       <div>
         <Palette palette={this.state.data} details={'active'} key={this.state.data.id} />
-        <Details palette={this.state.data}
+        <Details palette={this.state.data} />
       </div>
     )
   },
@@ -81,6 +85,8 @@ var App = React.createClass({
     var insert = this.state.currentView();
     return (
       <div className="app">
+        <HomeButton router={this.router} />
+        <FilterBox router={this.router} />
         { insert }
       </div>
     )

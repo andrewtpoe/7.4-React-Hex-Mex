@@ -1,0 +1,1 @@
+console.error("ReactifyError: /Users/techapoe/Projects/7.4-React-Hex-Mex/src/App.react.js: Parse Error: Line 75: Unexpected token < while parsing file: /Users/techapoe/Projects/7.4-React-Hex-Mex/src/App.react.js");

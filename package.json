@@ -4,7 +4,9 @@
   "description": "This project is serving as an introduction to ReactJS and other front end tools and technologies.",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "browserify -t reactify browser.js -o build/app.js",
+    "watch": "watchify -t reactify browser.js -d -o build/app.js -v"
   },
   "repository": {
     "type": "git",
@@ -17,8 +19,10 @@
   },
   "homepage": "https://github.com/andrewtpoe/7.4-React-Hex-Mex#readme",
   "dependencies": {
+    "browserify": "^11.0.1",
     "director": "^1.2.8",
     "react": "^0.13.3",
-    "reactify": "^1.1.1"
+    "reactify": "^1.1.1",
+    "watchify": "^3.3.1"
   }
 }

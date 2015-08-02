@@ -32,10 +32,11 @@ var FilterBox = React.createClass({
     console.log('Filtering by keyword: ' + keyword);
     var data = JSON.parse(sessionStorage.data);
     var filteredData = data.filter(function(palette) {
+      user = palette.user.name.toUpperCase();
       cat = palette.category.toUpperCase();
       title = palette.title.toUpperCase();
       key = keyword.toUpperCase();
-      return cat === key || title === key;
+      return cat === key || title === key || user === key;
     });
     sessionStorage.data = JSON.stringify(filteredData);
     this.setState({ userInput: ''}, function() {

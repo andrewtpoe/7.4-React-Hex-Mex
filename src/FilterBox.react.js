@@ -10,7 +10,7 @@ var FilterBox = React.createClass({
     console.log('Rendering FilterBox');
 
     return (
-      <input className="top__filterBy" ref="input" placeholder="Enter search keyword..." value={this.state.userInput} autoFocus="true" onChange={this._updateValue} onKeyPress={this._triggerFilter}/>
+      <input className="top__filterBy" ref="input" placeholder="Enter search keyword..." value={this.state.userInput} autoFocus="true" onChange={this._updateValue} onKeyDown={this._triggerFilter}/>
     )
   },
 

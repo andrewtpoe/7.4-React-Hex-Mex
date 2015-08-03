@@ -7,14 +7,10 @@ var Palette = React.createClass({
 
   render: function() {
     console.log('Rendering Palette class');
-    var active = '';
-    if (this.props.details === 'active') {
-      active = 'active';
-    }
 
     return (
       <div className={"palette " + active}>
-        <DetailButton palette={this.props.palette} details={active} />
+        <DetailButton palette={this.props.palette} isActive={this.props.isActive} navigate={this.props.navigate} />
         <Title palette={this.props.palette} />
         <Colors palette={this.props.palette} />
       </div>

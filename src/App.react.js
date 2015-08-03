@@ -50,14 +50,10 @@ var App = React.createClass({
     });
     self.router.configure({ html5history: true });
     self.router.init();
+  },
 
-    document.addEventListener('click', function(e) {
-      var href = e.target.attributes.href.value;
-      if (href && href[0] === '/') {
-        e.preventDefault();
-        self.router.setRoute(href);
-      };
-    })
+  _navigate: function(href) {
+    this.router.setRoute(href);
   },
 
   _displayIndex: function() {
@@ -77,7 +73,7 @@ var App = React.createClass({
       console.log('Building Palettes Index View');
       return (
         this.state.data.map(function(palette) {
-          return <Palette palette={palette} displayDetails={self._displayDetails} key={palette.id} />;
+          return <Palette palette={palette} displayDetails={self._displayDetails} key={palette.id} navigate={self._navigate} />;
         })
       )
     };
@@ -100,7 +96,7 @@ var App = React.createClass({
     console.log('Building Palette Detail View');
     return (
       <div>
-        <Palette palette={this.state.data} details={'active'} key={this.state.data.id} />
+        <Palette palette={this.state.data} isActive={true} key={this.state.data.id} navigate={this._navigate} />
         <Details palette={this.state.data} />
       </div>
     )

@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "browserify -t reactify browser.js -o build/app.js",
-    "watch": "watch 'npm run build' src/"
+    "watch": "watch 'npm run build' src/",
+    "start": "serve"
   },
   "repository": {
     "type": "git",
@@ -21,10 +22,15 @@
   "dependencies": {
     "browserify": "^11.0.1",
     "director": "^1.2.8",
+    "express": "3.1.x",
     "react": "^0.13.3",
     "reactify": "^1.1.1"
   },
   "devDependencies": {
     "watch": "^0.16.0"
+  },
+  "engines": {
+    "node": "0.10.x",
+    "npm": "1.2.x"
   }
 }

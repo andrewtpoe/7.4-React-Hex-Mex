@@ -20555,7 +20555,6 @@ var HomeButton = require('./HomeButton.react');
 var App = React.createClass({displayName: "App",
   getInitialState: function() {
     console.log('Setting Initial State');
-    // var palettes = JSON.parse(sessionStorage.data)
     return {
       data       : '',
       currentView: this._buildIndexView
@@ -20620,7 +20619,7 @@ var App = React.createClass({displayName: "App",
       console.log('Building Palettes Index View');
       return (
         this.state.data.map(function(palette) {
-          return React.createElement(Palette, {palette: palette, displayDetails: self._displayDetails, key: palette.id, navigate: this._navigate});
+          return React.createElement(Palette, {palette: palette, isActive: false, displayDetails: self._displayDetails, key: palette.id, navigate: self._navigate});
         })
       )
     };
@@ -20643,7 +20642,7 @@ var App = React.createClass({displayName: "App",
     console.log('Building Palette Detail View');
     return (
       React.createElement("div", null, 
-        React.createElement(Palette, {palette: this.state.data, details: 'active', key: this.state.data.id, navigate: this._navigate}), 
+        React.createElement(Palette, {palette: this.state.data, isActive: true, key: this.state.data.id, navigate: this._navigate}), 
         React.createElement(Details, {palette: this.state.data})
       )
     )
@@ -20770,7 +20769,7 @@ var FilterBox = React.createClass({displayName: "FilterBox",
     console.log('Rendering FilterBox');
 
     return (
-      React.createElement("input", {className: "top__filterBy", ref: "input", placeholder: "Enter search keyword...", value: this.state.userInput, autoFocus: "true", onChange: this._updateValue, onKeyPress: this._triggerFilter})
+      React.createElement("input", {className: "top__filterBy", ref: "input", placeholder: "Enter search keyword...", value: this.state.userInput, autoFocus: "true", onChange: this._updateValue, onKeyDown: this._triggerFilter})
     )
   },
 
@@ -20870,14 +20869,14 @@ var Palette = React.createClass({displayName: "Palette",
 
   render: function() {
     console.log('Rendering Palette class');
-    var active = '';
-    if (this.props.details === 'active') {
-      active = 'active';
+    if (this.props.isActive) {
+      var active = 'active';
+    } else {
+      var active = '';
     }
-
     return (
       React.createElement("div", {className: "palette " + active}, 
-        React.createElement(DetailButton, {palette: this.props.palette, details: active, navigate: this.props.navigate}), 
+        React.createElement(DetailButton, {palette: this.props.palette, isActive: this.props.isActive, navigate: this.props.navigate}), 
         React.createElement(Title, {palette: this.props.palette}), 
         React.createElement(Colors, {palette: this.props.palette})
       )
@@ -20943,7 +20942,7 @@ var React = require('react');
 var DetailButton = React.createClass({displayName: "DetailButton",
 
   render: function() {
-    if (this.props.details === 'active') {
+    if (this.props.isActive) {
       this.href = "/";
     } else {
       this.href = "/palette/" + this.props.palette.id;
@@ -20955,6 +20954,7 @@ var DetailButton = React.createClass({displayName: "DetailButton",
   },
 
   _handleClick: function(e) {
+    console.log(this.props.navigate);
     e.preventDefault();
     this.props.navigate(this.href);
   }

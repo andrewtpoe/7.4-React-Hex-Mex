@@ -12,11 +12,12 @@ body {
 
 body {
   font-family: Helvetica, Helvetica Neue, Arial;
-  color: #4d4d4d;
   margin: 0 20%;
   width: auto;
-  line-height: 0;
-  background-color: #4d4d4d; }
+  line-height: 0; }
+
+.app {
+  position: relative; }
 
 .header {
   height: 200px;
@@ -46,7 +47,7 @@ body {
   padding: 0 10px;
   color: #4d4d4d;
   text-decoration: none;
-  margin: 0 0 0 25px;
+  margin: 0 0 20px 25px;
   border-radius: 5px;
   border: 1px solid #000;
   outline: none; }
@@ -55,7 +56,7 @@ body {
   position: absolute;
   text-align: right;
   right: 25px;
-  top: 50%;
+  top: 20px;
   height: 30px;
   width: 200px;
   transform: translate(0, -50%);
@@ -115,7 +116,7 @@ body {
   float: right; }
 
 .details {
-  height: 200px;
+  height: 227px;
   margin: 0 50px;
   background-color: #eeeeee;
   border: 1px solid #000;
@@ -158,7 +159,7 @@ body {
   padding: 0 0 0 25px;
   font-size: 20px; }
 
-.details__colorsDiv {
+.details__colors {
   position: absolute;
   top: 100px;
   height: 125px;

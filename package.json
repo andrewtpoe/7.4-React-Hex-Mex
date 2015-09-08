@@ -1,0 +1,30 @@
+{
+  "name": "7.4-react-hex-mex",
+  "version": "0.1.0",
+  "description": "This project is serving as an introduction to ReactJS and other front end tools and technologies.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "browserify -t reactify browser.js -o build/app.js",
+    "watch": "watch 'npm run build' src/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrewtpoe/7.4-React-Hex-Mex.git"
+  },
+  "author": "Andrew T. Poe",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andrewtpoe/7.4-React-Hex-Mex/issues"
+  },
+  "homepage": "https://github.com/andrewtpoe/7.4-React-Hex-Mex#readme",
+  "dependencies": {
+    "browserify": "^11.0.1",
+    "director": "^1.2.8",
+    "react": "^0.13.3",
+    "reactify": "^1.1.1"
+  },
+  "devDependencies": {
+    "watch": "^0.16.0"
+  }
+}

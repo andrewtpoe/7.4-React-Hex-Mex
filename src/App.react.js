@@ -8,7 +8,6 @@ var HomeButton = require('./HomeButton.react');
 var App = React.createClass({
   getInitialState: function() {
     console.log('Setting Initial State');
-    // var palettes = JSON.parse(sessionStorage.data)
     return {
       data       : '',
       currentView: this._buildIndexView
@@ -73,7 +72,7 @@ var App = React.createClass({
       console.log('Building Palettes Index View');
       return (
         this.state.data.map(function(palette) {
-          return <Palette palette={palette} displayDetails={self._displayDetails} key={palette.id} navigate={self._navigate} />;
+          return <Palette palette={palette} isActive={false} displayDetails={self._displayDetails} key={palette.id} navigate={self._navigate} />;
         })
       )
     };

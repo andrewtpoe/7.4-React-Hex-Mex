@@ -15,6 +15,7 @@ var DetailButton = React.createClass({
   },
 
   _handleClick: function(e) {
+    console.log(this.props.navigate);
     e.preventDefault();
     this.props.navigate(this.href);
   }
